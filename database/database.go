@@ -21,7 +21,6 @@ func Database() {
 		log.Fatal("could not open db")
 	}
 
-	// Auto-migrate your tables
 	db.AutoMigrate(&types.User{}, &types.Task{})
 }
 
@@ -65,7 +64,7 @@ func UpdateUser(updatedUser types.User) (*types.User, error) {
 	result := db.Where("id = ?", updatedUser.ID).First(&existingUser)
 
 	if result.Error == nil {
-		//user exists; update and return
+
 		db.Model(&existingUser).Updates(updatedUser)
 		user, _ := GetUser(updatedUser.ID)
 		return user, nil
@@ -151,7 +150,6 @@ func UpdateTask(updatedTask types.Task) (*types.Task, error) {
 	result := db.Where("id = ?", updatedTask.ID).First(&existingTask)
 
 	if result.Error == nil {
-		//user exists; update and return
 		db.Model(&existingTask).Updates(updatedTask)
 		task, _ := GetTask(updatedTask.ID)
 		return task, nil
