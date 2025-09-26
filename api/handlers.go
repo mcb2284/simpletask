@@ -148,18 +148,21 @@ func DeleteTask(c *gin.Context) {
 
 func GetSummary(c *gin.Context) {
 
-	task_id := c.Query("taskid")
+	user_id := c.Query("id")
 	reqDone := &types.Request{
-		ID:     task_id,
+		ID:     user_id,
 		Status: "done",
+		Limit:  10,
 	}
 	reqPending := &types.Request{
-		ID:     task_id,
+		ID:     user_id,
 		Status: "pending",
+		Limit:  10,
 	}
 	reqInProgress := &types.Request{
-		ID:     task_id,
+		ID:     user_id,
 		Status: "in_progress",
+		Limit:  10,
 	}
 
 	summary := &types.TaskSummary{

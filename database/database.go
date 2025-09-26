@@ -100,11 +100,11 @@ func GetTasks(req types.Request) []types.Task {
 	query := db.Model(&tasks)
 
 	if req.ID != "" {
-		query.Where("user_id", req.ID)
+		query = query.Where("user_id = ?", req.ID)
 	}
 
 	if req.Status != "" {
-		query.Where("status = ?", req.Status)
+		query = query.Where("status = ?", req.Status)
 	}
 
 	orderClause := fmt.Sprintf("%s %s", "due_date", strings.ToUpper(req.Order))

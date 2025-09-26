@@ -314,7 +314,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/tasks/summary?taskid={{userid}}",
+							"raw": "{{base_url}}/tasks/summary?id={{userid}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -324,13 +324,13 @@
 							],
 							"query": [
 								{
-									"key": "taskid",
+									"key": "id",
 									"value": "{{userid}}",
-									"description": "Optional user ID to filter tasks by user"
+									"description": "User ID to get task summary for"
 								}
 							]
 						},
-						"description": "Get a summary of tasks grouped by status (pending, in_progress, done). Optionally filter by user ID."
+						"description": "Get a summary of tasks grouped by status (pending, in_progress, done) for a specific user ID."
 					},
 					"response": []
 				}
@@ -366,7 +366,7 @@
 		},
 		{
 			"key": "base_url",
-			"value": "https://postman-rest-api-learner.glitch.me/"
+			"value": "http://localhost:8080"
 		},
 		{
 			"key": "userid",
