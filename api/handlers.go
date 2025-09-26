@@ -111,6 +111,25 @@ func CreateTask(c *gin.Context) {
 
 }
 
+func UpdateTask(c *gin.Context) {
+
+	task_id := c.Param("taskid")
+	var updatedTask types.Task
+
+	err := c.BindJSON(&updatedTask)
+	if err != nil {
+		log.Fatal("error binding json")
+	}
+
+	updatedTask.ID = task_id
+	task, err := database.UpdateTask(updatedTask)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err)
+	}
+
+	c.JSON(http.StatusOK, task)
+}
+
 func DeleteTask(c *gin.Context) {
 	task_id := c.Param("taskid")
 

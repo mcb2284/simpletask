@@ -145,3 +145,26 @@ func CreateTask(newTask types.Task) (*types.Task, error) {
 	return task, nil
 
 }
+
+func UpdateTask(updatedTask types.Task) (*types.Task, error) {
+	var existingTask types.Task
+	result := db.Where("id = ?", updatedTask.ID).First(&existingTask)
+
+	if result.Error == nil {
+		//user exists; update and return
+		db.Model(&existingTask).Updates(updatedTask)
+		task, _ := GetTask(updatedTask.ID)
+		return task, nil
+	} else {
+		return nil, result.Error
+	}
+}
+
+func DeleteTask(task_id string) error {
+
+	result := db.Where("id = ?", task_id).Delete(&types.Task{})
+	if result.Error != nil {
+		return errors.New("missing or invalid task_id")
+	}
+	return nil
+}

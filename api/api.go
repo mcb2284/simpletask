@@ -18,8 +18,8 @@ func InitServer() {
 		task.GET("", GetTasks)
 		task.POST("", CreateTask)
 		task.GET("/:taskid", GetTask)
-		task.PATCH("/:taskid", Todo)
-		task.DELETE("/:taskid", Todo)
+		task.PATCH("/:taskid", UpdateTask)
+		task.DELETE("/:taskid", DeleteTask)
 	}
 
 	router.Run(":8080")
