@@ -27,6 +27,14 @@ go run .
 
 The server will start on `http://localhost:8080`
 
+## Testing with Postman
+
+A Postman collection is included (`simpletask.postman_collection.json`) with pre-configured requests for all API endpoints. To use it:
+
+1. Import the collection file into Postman
+2. Set the base URL to `http://localhost:8080` (or update as needed)
+3. Use the requests to test the API endpoints
+
 ## API Endpoints
 
 ### Users
