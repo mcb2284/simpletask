@@ -105,6 +105,9 @@ func CreateTask(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, err)
 	}
 
+	if !validStatus(newTask) {
+		c.JSON(http.StatusBadRequest, "Invalid Status")
+	}
 	createdTask, err := database.CreateTask(newTask)
 
 	c.JSON(http.StatusOK, createdTask)
@@ -121,6 +124,9 @@ func UpdateTask(c *gin.Context) {
 		log.Fatal("error binding json")
 	}
 
+	if !validStatus(updatedTask) {
+		c.JSON(http.StatusBadRequest, "Invalid Status")
+	}
 	updatedTask.ID = task_id
 	task, err := database.UpdateTask(updatedTask)
 	if err != nil {
@@ -140,6 +146,36 @@ func DeleteTask(c *gin.Context) {
 	c.JSON(http.StatusOK, "Deleted task")
 }
 
+func GetSummary(c *gin.Context) {
+
+	task_id := c.Query("taskid")
+	reqDone := &types.Request{
+		ID:     task_id,
+		Status: "done",
+	}
+	reqPending := &types.Request{
+		ID:     task_id,
+		Status: "pending",
+	}
+	reqInProgress := &types.Request{
+		ID:     task_id,
+		Status: "in_progress",
+	}
+
+	summary := &types.TaskSummary{
+		Pending:    len(database.GetTasks(*reqPending)),
+		InProgress: len(database.GetTasks(*reqInProgress)),
+		Done:       len(database.GetTasks(*reqDone)),
+	}
+
+	c.JSON(http.StatusOK, summary)
+
+}
+
 func Todo(c *gin.Context) {
 	c.JSON(200, gin.H{"message": "TODO: implement this endpoint"})
+}
+
+func validStatus(task types.Task) bool {
+	return task.Status == "pending" || task.Status == "in_progress" || task.Status == "done" || task.Status == ""
 }

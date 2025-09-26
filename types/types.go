@@ -18,9 +18,15 @@ type Task struct {
 	Title    string    `json:"title"`
 	Status   string    `json:"status"`
 	DueDate  time.Time `json:"due_date"`
-	IdempKey string    `json:"idemp_key,omitempty"`
+	IdempKey string    `json:"idemp_key,omitempty" gorm:"uniqueIndex"`
 	UserID   string    `json:"user_id"`
 	User     User      `gorm:"foreignKey:UserID" json:"user"`
+}
+
+type TaskSummary struct {
+	Pending    int `json:"pending"`
+	InProgress int `json:"in_progress"`
+	Done       int `json:"done"`
 }
 
 type User struct {

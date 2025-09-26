@@ -135,6 +135,10 @@ func CreateTask(newTask types.Task) (*types.Task, error) {
 		}
 	}
 
+	if newTask.Status == "" {
+		newTask.Status = "pending"
+	}
+
 	newTask.ID = uuid.New().String()
 	fmt.Printf("Created new user %v\n", newTask)
 	db.Create(&newTask)
